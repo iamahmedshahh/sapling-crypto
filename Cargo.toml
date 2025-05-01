@@ -50,7 +50,7 @@ tracing = "0.1"
 
 # Note Commitment Trees
 bitvec = "1"
-incrementalmerkletree = { version = "0.7", features = ["legacy-api"] }
+incrementalmerkletree = { version = "0.5.0", features = ["legacy-api"] }
 
 # Note encryption
 zcash_note_encryption = { version = "0.4", features = ["pre-zip-212"] }
@@ -78,6 +78,10 @@ rand_xorshift = "0.3"
 
 [target.'cfg(unix)'.dev-dependencies]
 pprof = { version = "0.11", features = ["criterion", "flamegraph"] } # MSRV 1.56
+
+## Uncomment this to test someone else's librustzcash changes in a branch
+[patch.crates-io]
+incrementalmerkletree = { git = "https://github.com/who-biz/incrementalmerkletree.git", branch = "verus" }
 
 [features]
 default = ["multicore"]
