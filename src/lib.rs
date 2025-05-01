@@ -8,7 +8,7 @@
 //! opposed to e.g. an Orchard payment address, which is also shielded).
 //!
 //! ## Feature flags
-#![doc = document_features::document_features!()]
+// #![doc = document_features::document_features!()]
 //!
 
 #![cfg_attr(docsrs, feature(doc_cfg))]
