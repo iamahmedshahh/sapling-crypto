@@ -610,8 +610,11 @@ pub struct SharedSecret(jubjub::SubgroupPoint);
 
 impl SharedSecret {
     /// For checking test vectors only.
-    #[cfg(test)]
-    pub(crate) fn to_bytes(&self) -> [u8; 32] {
+
+    //TODO: re-enable the cfg macro below, after debugging sharedsecret
+//    #[cfg(test)]
+//    pub(crate) fn to_bytes(&self) -> [u8; 32] {
+    pub fn to_bytes(&self) -> [u8; 32] {
         self.0.to_bytes()
     }
 
