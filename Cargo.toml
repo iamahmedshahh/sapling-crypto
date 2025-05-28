@@ -7,7 +7,7 @@ authors = [
     "Kris Nuttycombe <kris@electriccoin.co>",
 ]
 edition = "2021"
-rust-version = "1.65"
+rust-version = "1.81.0"
 description = "Cryptographic library for Zcash Sapling"
 homepage = "https://github.com/zcash/sapling-crypto"
 repository = "https://github.com/zcash/sapling-crypto"
@@ -38,7 +38,7 @@ blake2b_simd = "1"
 blake2s_simd = "1"
 
 # Documentation
-document-features = "0.2"
+document-features = "0.2.6"
 
 # Encodings
 byteorder = "1"
@@ -53,7 +53,7 @@ bitvec = "1"
 incrementalmerkletree = { version = "0.5", features = ["legacy-api"] }
 
 # Note encryption
-zcash_note_encryption = { version = "0.4", features = ["pre-zip-212"] }
+zcash_note_encryption = { version = "0.4.1", features = ["pre-zip-212"] }
 
 # Secret management
 subtle = "2.2.3"
@@ -102,3 +102,4 @@ harness = false
 [[bench]]
 name = "pedersen_hash"
 harness = false
+
