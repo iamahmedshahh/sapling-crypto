@@ -165,11 +165,11 @@ impl Domain for SaplingDomain {
 
     // for use when we don't need to handle full note plaintext
     // i.e. only need intended recipient during encryption
-    fn ka_derive_public(
+    fn ka_derive_public_from_recipient(
         recipient: &Self::Recipient,
         esk: &Self::EphemeralSecretKey,
     ) -> Self::EphemeralPublicKey {
-        esk.derive_public(recipient().g_d().into())
+        esk.derive_public(recipient.g_d().into())
     }
 
     fn ka_agree_enc(
