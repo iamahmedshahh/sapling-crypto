@@ -546,6 +546,14 @@ impl ConstantTimeEq for EphemeralSecretKey {
 }
 
 impl EphemeralSecretKey {
+    //TODO: remove below, once we've constructed full-featured APIs
+    // for encrypt/decrypt in rut
+//    #[cfg(test)]
+//    pub(crate) fn to_bytes(&self) -> [u8; 32] {
+    pub fn to_bytes(&self) -> [u8; 32] {
+        self.0.to_bytes()
+    }
+
     pub(crate) fn from_bytes(bytes: &[u8; 32]) -> CtOption<Self> {
         jubjub::Scalar::from_bytes(bytes).map(EphemeralSecretKey)
     }
