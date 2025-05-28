@@ -167,8 +167,9 @@ impl Domain for SaplingDomain {
     // i.e. only need intended recipient during encryption
     fn ka_derive_public_from_recipient(
         recipient: &Self::Recipient,
-        esk: &Self::EphemeralSecretKey,
+        esk_bytes: &EphemeralKeyBytes,
     ) -> Self::EphemeralPublicKey {
+        let esk = Self::esk(esk_bytes).expect("converting to ephemeral secret key from bytes failed!");
         esk.derive_public(recipient.g_d().into())
     }
 
@@ -250,6 +251,11 @@ impl Domain for SaplingDomain {
         // https://zips.z.cash/zip-0216#specification
         EphemeralPublicKey::from_bytes(&ephemeral_key.0).into()
     }
+
+    fn esk(ephemeral_key: &EphemeralKeyBytes) -> Option<Self::EphemeralSecretKey> {
+        EphemeralSecretKey::from_bytes(&ephemeral_key.0).into()
+    }
+
 
     fn parse_note_plaintext_without_memo_ivk(
         &self,
