@@ -105,5 +105,5 @@ harness = false
 
 [patch.crates-io]
 # remove this to use crates.io zcash_note_encryption
-zcash_note_encryption = { git = "https://github.com/who-biz/zcash_note_encryption", branch = "0.4.1_verus" }
+zcash_note_encryption = { git = "https://github.com/who-biz/zcash_note_encryption", branch = "ka_agree" }
 
