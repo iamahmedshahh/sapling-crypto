@@ -12,6 +12,8 @@ use subtle::CtOption;
 use zcash_spec::PrfExpand;
 use zip32::{ChainCode, ChildIndex, DiversifierIndex, Scope};
 
+use tracing::warn;
+
 use std::io::{self, Read, Write};
 use std::ops::AddAssign;
 
@@ -316,6 +318,7 @@ impl ExtendedSpendingKey {
     /// Decodes the extended spending key from its serialized representation as defined in
     /// [ZIP 32](https://zips.z.cash/zip-0032)
     pub fn from_bytes(b: &[u8]) -> Result<Self, DecodingError> {
+        warn!("ExtendedSpendingKey::from_bytes() called!");
         if b.len() != 169 {
             return Err(DecodingError::LengthInvalid {
                 expected: 169,
@@ -327,7 +330,7 @@ impl ExtendedSpendingKey {
 
         let mut parent_fvk_tag = FvkTag([0; 4]);
         parent_fvk_tag.0[..].copy_from_slice(&b[1..5]);
-
+        warn!("depth({:?}), fvktag({:?})", depth, parent_fvk_tag);
         let mut ci_bytes = [0u8; 4];
         ci_bytes[..].copy_from_slice(&b[5..9]);
         let child_index = KeyIndex::new(depth, u32::from_le_bytes(ci_bytes))
@@ -337,18 +340,22 @@ impl ExtendedSpendingKey {
         c[..].copy_from_slice(&b[9..41]);
 
         let expsk = ExpandedSpendingKey::from_bytes(&b[41..137])?;
+        warn!("child_index: {:?}, chain_code({:?}), expsk({:?})", child_index, c, expsk);
 
         let mut dk = DiversifierKey([0u8; 32]);
         dk.0[..].copy_from_slice(&b[137..169]);
 
-        Ok(ExtendedSpendingKey {
+        warn!("diversifier key({:?})", dk);
+        let extsk = ExtendedSpendingKey {
             depth,
             parent_fvk_tag,
             child_index,
             chain_code: ChainCode::new(c),
             expsk,
             dk,
-        })
+        };
+        warn!("extsk({:?})", extsk);
+        Ok(extsk)
     }
 
     /// Reads and decodes the encoded form of the extended spending key as defined in
