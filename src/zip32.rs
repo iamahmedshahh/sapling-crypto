@@ -136,7 +136,7 @@ impl FvkFingerprint {
 
 /// A Sapling full viewing key tag
 #[derive(Clone, Copy, Debug, PartialEq)]
-struct FvkTag([u8; 4]);
+pub struct FvkTag(pub [u8; 4]);
 
 impl FvkTag {
     fn master() -> Self {
@@ -150,7 +150,7 @@ impl FvkTag {
 
 /// A key used to derive diversifiers for a particular child key
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct DiversifierKey([u8; 32]);
+pub struct DiversifierKey(pub [u8; 32]);
 
 impl DiversifierKey {
     pub fn master(sk_m: &[u8]) -> Self {
@@ -236,7 +236,7 @@ impl DiversifierKey {
 /// an index in their encoding. This type allows the encoding to be represented, while
 /// also enabling the derivation methods to only accept [`ChildIndex`].
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum KeyIndex {
+pub enum KeyIndex {
     Master,
     Child(ChildIndex),
 }
@@ -250,7 +250,7 @@ impl KeyIndex {
         }
     }
 
-    fn index(&self) -> u32 {
+    pub fn index(&self) -> u32 {
         match self {
             KeyIndex::Master => 0,
             KeyIndex::Child(i) => i.index(),
@@ -261,12 +261,12 @@ impl KeyIndex {
 /// A Sapling extended spending key
 #[derive(Clone)]
 pub struct ExtendedSpendingKey {
-    depth: u8,
-    parent_fvk_tag: FvkTag,
-    child_index: KeyIndex,
-    chain_code: ChainCode,
+    pub depth: u8,
+    pub parent_fvk_tag: FvkTag,
+    pub child_index: KeyIndex,
+    pub chain_code: ChainCode,
     pub expsk: ExpandedSpendingKey,
-    dk: DiversifierKey,
+    pub dk: DiversifierKey,
 }
 
 impl std::cmp::PartialEq for ExtendedSpendingKey {
@@ -521,12 +521,12 @@ impl ExtendedSpendingKey {
 // A Sapling extended full viewing key
 #[derive(Clone)]
 pub struct ExtendedFullViewingKey {
-    depth: u8,
-    parent_fvk_tag: FvkTag,
-    child_index: KeyIndex,
-    chain_code: ChainCode,
+    pub depth: u8,
+    pub parent_fvk_tag: FvkTag,
+    pub child_index: KeyIndex,
+    pub chain_code: ChainCode,
     pub fvk: FullViewingKey,
-    pub(crate) dk: DiversifierKey,
+    pub dk: DiversifierKey,
 }
 
 impl std::cmp::PartialEq for ExtendedFullViewingKey {
